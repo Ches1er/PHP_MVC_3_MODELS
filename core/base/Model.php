@@ -78,18 +78,22 @@ abstract class Model
             ->from($class::$table)->where($far_key,$this->$current_key)->first();
     }
 
-    protected function hasMany($class,$far_key=null,$current_key="id"){
+    protected function hasMany($class,$far_key=null,$current_key){
         $class2 = get_class($this);
         if($far_key===null) $far_key = $class2::$table."_id";
         return DBQueryBuilder::create(DBQueryBuilder::DEF_CONFIG_NAME,$class)
             ->from($class::$table)->where($far_key,$this->$current_key);
     }
+
     protected function hasManyBelong($far_table_class,$mid_table,$far_mid_key,
-                                     $mid_key,$current_key,$far_key)
+                                     $mid_far_key,$cur_key,$mid_cur_key)
     {
         $current_table_class = get_class($this);
+        $cur_table = $current_table_class::$table;
+
         return DBQueryBuilder::create(DBQueryBuilder::DEF_CONFIG_NAME,$far_table_class)
-            ->from($current_table_class::$table)->join("inner",$mid_table,
-                [$current_key,$mid_key],[$mid_table,$far_mid_key,$mid_key,$far_table_class::$table])->where($mid_key,$this->$current_key);
+            ->from($far_table_class::$table)->join("inner",$mid_table,
+                [$far_mid_key,$mid_far_key],[$cur_table,$cur_key,$mid_table,$mid_cur_key])
+                    ->where($cur_table.".".$cur_key,$this->$cur_key);
     }
 }

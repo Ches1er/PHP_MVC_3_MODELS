@@ -12,7 +12,8 @@ foreach ($films as $film):?>
         <td><?=$film->id?></td>
         <td><?=$film->name?></td>
         <td><?=$film->year?></td>
-        <td><?=$film->user_id?></td>
+        <td><?=$film->user()->login?></td>
+        <td><?php $film->genres()?></td>
     </tr>
 <?php endforeach;
 endif?>
@@ -26,12 +27,11 @@ endif?>
         <th>genre</th>
         <th>year</th>
     </tr>
-    <?php foreach ($users_films as $u_n):?>
+    <?php foreach ($users_films as $u):?>
         <tr>
-            <td><?=$u_n["login"]?></td>
-            <td><?=$u_n["name"]?></td>
-            <td><?=$u_n["genre"]?></td>
-            <td><?=$u_n["year"]?></td>
+            <td><?=$u->name?></td>
+            <td><?=$u->year?></td>
+            <td><?=$u->user()->login?></td>
         </tr>
     <?php endforeach;?>
 </table>

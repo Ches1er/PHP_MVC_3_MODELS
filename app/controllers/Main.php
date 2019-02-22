@@ -10,6 +10,7 @@ namespace app\controllers;
 
 
 use app\models\Film;
+use app\models\Genres;
 use app\models\User;
 use app\models\Todo;
 use core\base\Controller;
@@ -22,13 +23,9 @@ class Main extends Controller
     public function actionIndex(){
         $view = new TemplateView("main","templates/def");
         $view->films = Film::get();
-        /*INNER JOIN `films` on `users`.user_id = `films`.user_id
-            INNER JOIN films_genres f_g on films.id = f_g.film_id
-                INNER JOIN genres on f_g.genre_id = genres.id;*/
-        $view->users_films = User::join("inner","films",["user_id","user_id"],
-            [["films_genres","film_id","films","id"],
-                ["genres","id","films_genres","genre_id"]])->all();
         $view->hh="dfgdf";
-        return $view;
+        print_r(Film::where("name","Gone with the wind")->first()->genres()->get());
+        $view->users_films = User::where("login","vasia")->first()->films()->get();
+        //return $view;
     }
 }

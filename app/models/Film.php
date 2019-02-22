@@ -17,10 +17,10 @@ class Film extends \core\base\Model
     protected static $table = "films";
 
     public function user(){
-        return $this->belongsTo(User::class,"user_id");
+        return $this->belongsTo(User::class,"user_id","user_id");
     }
     public function genres(){
-        print_r($this->hasManyBelong(Genres::class,"films_genres",
-            "id","genre_id","id","id"));
+        return $this->hasManyBelong(Genres::class,"films_genres",
+            "id","genre_id","id","film_id");
     }
 }

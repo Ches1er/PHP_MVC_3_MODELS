@@ -14,11 +14,11 @@ use core\base\Model;
 class User extends Model
 {
     protected static $table = "users";
-    public $id;
+    public $user_id;
     public $login;
     public $pass;
 
     public function films(){
-        return $this->hasMany(Film::class,"user_id");
+        return $this->hasMany(Film::class,"user_id","user_id");
     }
 }
